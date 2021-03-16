@@ -19,8 +19,8 @@
         $cpassword = $_POST['cpassword'];
         if($name !="" && $email != "" && $password != "" && $cpassword !=""){
             if($password == $cpassword){
-                $sql = "INSERT INTO user (name, email, password, confirm_password) 
-                VALUES ('$name', '$email', '$password', '$cpassword')";
+                $sql = "INSERT INTO users (name, email, password, confirm_password ,created_date) 
+                VALUES ('$name', '$email', '$password', '$cpassword' ,now())";
                 mysqli_query($conn, $sql);
                 header("location: login.php"); 
             }

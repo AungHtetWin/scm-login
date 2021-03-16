@@ -11,7 +11,7 @@
     }
     $errormessage="";
     if(isset($_POST['submit'])){   
-        $result = mysqli_query($conn, "SELECT * FROM user"); 
+        $result = mysqli_query($conn, "SELECT * FROM users"); 
          while($row = mysqli_fetch_assoc($result)): 
             if($email == $row['email'] && $password == $row['password']) {
                 $_SESSION['auth'] = true;
