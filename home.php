@@ -1,69 +1,178 @@
-<!doctype html>
-<html>
+<?php
+ session_start();
+ include("connectdb.php");
+ $userid = $_SESSION['userid'];
+ $result= mysqli_query($conn ,"SELECT name FROM users WHERE id=$userid");
+ $row = mysqli_fetch_assoc($result);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
- <title>Home Page</title>
-</head> 
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Blog Post | Home</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  
+  
+</head>
+<style>
+body {
+  padding-top: 56px;
+}
+</style>
+
 <body>
- <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Contact</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav my-2 my-lg-0">
-      <li class="nav-item">
-        <a href="logout.php" class="nav-link">Logout</a>
-      </li>
-    </ul>
-  </div> 
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Start Your Blog</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout.php">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
-  <div class="jumbotron text-center">
-    <h1>Home Page</h1>
-  </div>
-  <div class="container col-lg-8 col-sm-11">
+
+  <!-- Page Content -->
+  <div class="container">
+
     <div class="row">
-      <div class="card col-5 p-0 mb-3">
-        <div class="card-header bg-secondary"> Header </div>
-         <div class="card-body bg-light">
-            <h5 class="card-title">Light Card Title</h5>
-            <p class="card-text">Some quick example text to bulid on the card title and make up the bulk of the card's content.</p>
-         </div>
-       </div>
-      <div class="card col-5 p-0 offset-2 mb-3">
-      <div class="card-header bg-secondary"> Header </div>
-      <div class="card-body bg-light">
-        <h5 class="card-title">Light Card Title</h5>
-        <p class="card-text">Some quick example text to bulid on the card title and make up the bulk of the card's content.</p>
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+        <?php 
+          $post_result = mysqli_query($conn, "SELECT * FROM posts"); 
+          while($postrow = mysqli_fetch_assoc($post_result)): 
+          $postid= $postrow['id'];
+        ?>
+          <!-- Title -->
+          <h1 class="mt-4"><?php echo $postrow['title'] ?></h1>
+
+          <!-- Author -->
+          <p class="lead">
+            by
+            <a href="#"><?php echo $row['name'] ?> </a>
+          </p>
+          <hr>
+          <!-- Date/Time -->
+          <p>Posted on <?php echo $postrow['created_date'] ?></p>
+          <hr>
+
+          <!-- Post Content -->
+          <p><?php echo $postrow['body'] ?></p>
+          <hr>
+
+          <!-- Comments Form -->
+          <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
+            <div class="card-body">
+              <form method="post">
+                <div class="form-group">
+                  <textarea class="form-control" rows="3" name="comment"></textarea>
+                </div>
+                <button type="submit" name="submit<?php echo $postid ?>" class="btn btn-primary" id="<?php echo $postid ?>">Submit</button>
+              </form>
+            </div>
+          </div>
+          <?php 
+             if(isset($_POST['submit'.$postid])){
+               echo $_POST['submit'.$postid];
+                $postcomment= $_POST['comment'];
+                $sql = "INSERT INTO comments (user_id, post_id, body, created_date) 
+                VALUES ('$userid', '$postid', '$postcomment', now())";
+                mysqli_query($conn, $sql); 
+             }
+          ?>    
+            <?php 
+              $commentresult =mysqli_query($conn ,"select c.post_id,c.body,u.name from users u join comments c on u.id=c.user_id join posts p on p.id=c.post_id"); 
+              while($commentrow = mysqli_fetch_assoc($commentresult)): 
+            ?>
+              <?php if($postrow['id'] == $commentrow['post_id']){ ?> 
+                <!-- Single Comment --> 
+                <div class="media mb-4">
+                  <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                  <div class="media-body">
+                    <h5 class="mt-0"> <?php echo $commentrow['name'] ?> </h5>
+                    <?php echo $commentrow['body'] ?>
+                  </div>
+                </div>
+              <?php } ?>   
+            <?php endwhile; ?>   
+        <?php endwhile; ?>    
       </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Search Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for...">
+              <span class="input-group-append">
+                <button class="btn btn-secondary" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Popular Post Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">Popular post</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="card col-5 p-0 mb-3">
-      <div class="card-header bg-secondary"> Header </div>
-      <div class="card-body bg-light">
-        <h5 class="card-title">Light Card Title</h5>
-        <p class="card-text">Some quick example text to bulid on the card title and make up the bulk of the card's content.</p>
-      </div>
-      </div>
-      <div class="card col-5 p-0 offset-2 mb-3 ">
-      <div class="card-header bg-secondary"> Header </div>
-      <div class="card-body bg-light">
-        <h5 class="card-title">Light Card Title</h5>
-        <p class="card-text">Some quick example text to bulid on the card title and make up the bulk of the card's content.</p>
-      </div>
-     </div>
+
+    </div>
+    <!-- /.row -->
+
   </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
 </body>
-</html> 
+
+</html>
