@@ -15,7 +15,7 @@
   <meta name="author" content="">
 
   <title>Blog Post | Home</title>
-
+  <link rel="stylesheet" href="css/style.css">
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
   
@@ -25,16 +25,10 @@
   
   
 </head>
-<style>
-body {
-  padding-top: 56px;
-}
-</style>
-
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="#">Start Your Blog</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +57,21 @@ body {
       </div>
     </div>
   </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Free Blog Style</h1>
+            <span class="subheading">A Blog Theme by Louis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <!-- Page Content -->
   <div class="container">
