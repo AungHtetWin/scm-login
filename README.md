@@ -8,7 +8,7 @@
 </div>
 <h1>Login Main</h1>
 <div>
-<h3>Go to login.php</h3>
+<h3>Login.php</h3>
 <ul>
   <li>email - admin@admin.com</li>
   <li>password - secret</li>
@@ -18,14 +18,20 @@
 <ul>
 </div>
 <div>
-<h3>Go to home.php</h3>
+  <h3>Register.php</h3>
+  <ul>
+    <li>need to register the account before logging in</li>
+  </ul>
+</div>
+<div>
+<h3>Home.php</h3>
 <ul>
   <li>it access after logged in</li>
   <li>it not access without logged in</li>
 <ul>
 </div>
 <div>
-<h3>Go to logout.php</h3>
+<h3>Logout.php</h3>
 <ul>
   <li>if logout and go to login page</li>
 <ul>
