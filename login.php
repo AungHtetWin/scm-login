@@ -16,7 +16,6 @@
             if($email == $row['email'] && $password == $row['password']) {
                 $_SESSION['auth'] = true;
                 $_SESSION['userid'] = $row['id'];
-                echo $_SESSION['userid'];
             }
             else if($email != $row['email'] && $password == $row['password']) {
                 $errormessage="Incorrect Email Address";

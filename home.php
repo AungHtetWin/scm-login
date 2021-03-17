@@ -2,7 +2,7 @@
  session_start();
  include("connectdb.php");
  $userid = $_SESSION['userid'];
- $result= mysqli_query($conn ,"SELECT name FROM users WHERE id=$userid");
+ $result= mysqli_query($conn ,"SELECT * FROM users WHERE id=$userid");
  $row = mysqli_fetch_assoc($result);
 ?>
 

@@ -5,12 +5,6 @@
     $email = "";
     $password = "";
     $cpassword = "";
-     if(isset($_POST['email'])){
-        $email = $_POST['email'];
-    }
-    if(isset($_POST['password'])){
-       $password = $_POST['password'];
-    }
     $errormessage="";
     if(isset($_POST['submit'])){ 
         $name = $_POST['name'];  
