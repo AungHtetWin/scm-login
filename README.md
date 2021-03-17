@@ -1,3 +1,10 @@
+<div>
+  <ul>
+    <li>Download zipcode</li>
+    <li>Paste => Server/htdocs and then extract here</li>
+    <li>run => localhost/folder name</li>
+  </ul>
+</div>
 <h1>Login Main</h1>
 <div>
 <h3>Go to login.php</h3>
