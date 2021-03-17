@@ -135,7 +135,7 @@
                     <h5 class="mt-0"> <?php echo $commentrow['name'] ?> </h5>
                     <?php echo $commentrow['body'] ?>
                   </div>
-                </div>
+                </div> 
               <?php } ?>   
             <?php endwhile; ?>   
         <?php endwhile; ?>    
