@@ -3,6 +3,7 @@
     <li>Download zipcode</li>
     <li>Paste => Server/htdocs and then extract here</li>
     <li>Open XAMPP control panel => start -Apach and -Mysql </li>
+    <li>Open => localhost/phpmyadmin and then import blog.sql file </li>
     <li>run => localhost/folder name</li>
   </ul>
 </div>
